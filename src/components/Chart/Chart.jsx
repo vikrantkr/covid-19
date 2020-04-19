@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import {fetchDailyData} from '../../api';
 import {Line,Bar} from 'react-chartjs-2';
 import styles from './Chart.module.css';
+import 'chartjs-plugin-datalabels';
 const Chart =({data:{confirmed,deaths,recovered},country})=>{
 
     const [dailyData, setDailyData]= useState([]);
@@ -28,10 +29,17 @@ const Chart =({data:{confirmed,deaths,recovered},country})=>{
                     data:dailyData.map(({deaths})=>deaths),
                     label:'Deaths',
                     borderColor:'red',
-                    backgroundColor:'rgba(255,0,0,0.5)',
+                    backgroundColor:'pink',
                     fill:true,
-
+                    hoverBackgroundColor:'black'
                 }]
+            }}
+            options={{
+                plugins: {
+                    datalabels: {
+                       display: false
+                    }
+                 }
             }}
             />
         ):null
@@ -51,7 +59,13 @@ const Chart =({data:{confirmed,deaths,recovered},country})=>{
             }}
             options={{
                 legend:{display:false},
-                title:{display:true,text:`Current state in ${country}`}
+                title:{display:true,text:`Current status in ${country}`},
+                plugins: {
+                    datalabels: {
+                       display: true,
+                       color: 'white'
+                    }
+                 }
             }}
             />
             
